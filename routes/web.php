@@ -64,6 +64,7 @@ Route::get('/test', function(){
 Route::get('/admin',function(){
 	return view('admin.index');
 });
+
+Route::post('/admin/userd','HomeController@store');
 	
 Route::resource('/admin/users','admin\AdminUsersController');	
-	

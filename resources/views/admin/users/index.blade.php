@@ -1,26 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>website</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="assets/css/style.css">
-	<link rel="icon" href="assets/iamges/logo.png" type="img/png">
-</head>
-<body>
-<h1>users</h1>
+@extends('layouts.admin')
+@section('content')
 
 
+    <h1>users</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th> id </th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th>Status</th>
+				<th>create</th>
+				<th>update</th>
+			</tr>
+		</thead>
+		@if($users)
+			@foreach($users as $user)
+				<tr>
+					<td>{{$user->id}}</td>
+					<td>{{$user->name}}</td>
+					<td>{{$user->email}}</td>
+					<td>{{$user->role->name}}</td>
+					<td>{{$user->is_active ==1 ? 'Active':'not active'}}
+					<td>{{$user->created_at->diffForHumans()}}</td>
+					<td>{{$user->updated_at->diffForHumans()}}</td>
+				</tr>
+			@endforeach
+		@endif
+	</table>		
 
 
-
-
-
-
-
-
-
-<script src="assets/js/script.js"></script>
-</body>
-</html>
+@stop

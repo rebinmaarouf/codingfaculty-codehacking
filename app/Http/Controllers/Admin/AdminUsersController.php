@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use App\Http\Requests\UsersRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Collection;
+use App\User;
+use App\Role;
+use App\Photo;
 class AdminUsersController extends Controller
 {
     /**
@@ -14,7 +17,8 @@ class AdminUsersController extends Controller
      */
     public function index()
     {
-        return view('admin.users.index');
+		$users = User::All();
+        return view('admin.users.index',compact('users'));
     }
 
     /**
@@ -24,7 +28,8 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-        //
+		 $roles = Role::pluck('name', 'id');
+		 return view('admin.users.create',compact('roles'));
     }
 
     /**
@@ -33,9 +38,25 @@ class AdminUsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
-        //
+		$input = $request->all();
+		if ($file = $request->file('photo_id')) {
+			$name = $file->getClientOriginalName();
+			$name = time().$file->getClientoriginalName();
+			$address = 'images/users/';
+			$filee = $address . $name ;
+			$file->move($address,$name);
+			$photo =Photo::create(['filee'=>$filee]);
+			$input['photo_id'] = $photo->id;
+		}
+		$input['password']= bcrypt($request->password);
+		User::create($input);
+		return redirect('/admin/users');
+		/*
+		User::create($request->all());
+        return redirect('/admin/users');
+		*/
     }
 
     /**
