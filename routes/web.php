@@ -1,6 +1,7 @@
 <?php
 use App\User;
 use App\Role;
+use App\Photo;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,7 +34,8 @@ Route::get('/test', function(){
 	$userrole = User::all();
 	foreach($userrole as $user){
 		echo $user->name.": ";
-		echo $user->Role->name . "<br/>";
+		echo $user->Role->name. " ";
+		echo "photo:". $user->photo->filee. "<br/>";
 	}
 	
 	echo "<br/>";
