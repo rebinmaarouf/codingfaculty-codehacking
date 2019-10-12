@@ -19,15 +19,17 @@
 		@if($users)
 			@foreach($users as $user)
 				<tr>
+				
 					<td>{{$user->id}}</td>
 					
 					<td><img src="{{$user->photo? $user->photo->filee : '/images/users/nophoto.jpg'}}" alt=""></td>
-					<td>{{$user->name}}</td>
+					<td><a href="/admin/users/{{$user->id}}/edit"> {{$user->name}} </a></td>
 					<td>{{$user->email}}</td>
 					<td>{{$user->role->name}}</td>
 					<td>{{$user->is_active ==1 ? 'Active':'not active'}}
 					<td>{{$user->created_at->diffForHumans()}}</td>
 					<td>{{$user->updated_at->diffForHumans()}}</td>
+				
 				</tr>
 			@endforeach
 		@endif

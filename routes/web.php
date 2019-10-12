@@ -35,7 +35,9 @@ Route::get('/test', function(){
 	foreach($userrole as $user){
 		echo $user->name.": ";
 		echo $user->Role->name. " ";
+		if($user->photo){
 		echo "photo:". $user->photo->filee. "<br/>";
+		}
 	}
 	
 	echo "<br/>";
@@ -69,4 +71,4 @@ Route::get('/admin',function(){
 
 Route::post('/admin/userd','HomeController@store');
 	
-Route::resource('/admin/users','admin\AdminUsersController');	
+Route::resource('/admin/users','admin\AdminUsersController');
