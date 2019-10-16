@@ -65,10 +65,15 @@ Route::get('/test', function(){
 	}
 });
 
-Route::get('/admin',function(){
-	return view('admin.index');
+Route::group(['middleware'=>'admin'], function(){
+	
+	Route::get('/admin',function(){
+		return view('admin.index');
+	});
+	
+	Route::resource('/admin/users','admin\AdminUsersController');
+	
+	Route::resource('/admin/posts','admin\AdminPostsController');
 });
 
-Route::post('/admin/userd','HomeController@store');
-	
-Route::resource('/admin/users','admin\AdminUsersController');
+

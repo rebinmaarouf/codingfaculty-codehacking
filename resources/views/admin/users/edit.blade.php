@@ -47,7 +47,9 @@
 			
 		</div>
 	{!! Form::close() !!}
-
+	{!! Form::model($user,['method'=>'DELETE','action' => ['admin\AdminUsersController@destroy', $user->id]]) !!}
+	{!! Form::submit('delete user',['class' => 'btn btn-danger']) !!}
+	{!! Form::close() !!}
 	@include('includes/form_error')
 	</div>
 @stop
