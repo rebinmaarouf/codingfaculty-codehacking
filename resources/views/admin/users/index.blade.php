@@ -22,10 +22,8 @@
 		</thead>
 		@if($users)
 			@foreach($users as $user)
-				<tr>
-				
-					<td>{{$user->id}}</td>
-					
+				<tr>				
+					<td>{{$user->id}}</td>					
 					<td><img src="{{$user->photo? $user->photo->filee : '/images/users/nophoto.jpg'}}" alt=""></td>
 					<td><a href="/admin/users/{{$user->id}}/edit"> {{$user->name}} </a></td>
 					<td>{{$user->email}}</td>

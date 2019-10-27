@@ -2,6 +2,8 @@
 use App\User;
 use App\Role;
 use App\Photo;
+use App\Post;
+use App\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,6 +65,60 @@ Route::get('/test', function(){
 	echo "<br/>";
 	
 	}
+	
+	echo "<br/><br/>";
+	echo "user posts:";
+	echo "<br/>";
+	$users = User::all();
+	echo "<ul>";
+	foreach($users as $user){
+		echo "<li>";
+		echo $user->name;
+		echo "<ul>";
+		foreach($user->post as $post){
+			echo "<li>";
+			echo $post->title;
+			echo "</li>";
+		}
+		echo "</ul>";
+		echo "</li>";
+	}
+	echo "</ul>";
+	
+	echo "Categories"."<br>";
+	$Categories = Category::all();
+	echo "<ul>";
+	foreach($Categories as $Category){
+		echo "<li>";
+		echo $Category->name;
+		echo "</li>";
+	}
+	echo "</ul>";
+	
+	echo "post category:"."<br>";
+	$posts = Post::all();
+	foreach($posts as $post){
+		echo $post->title.": ";
+		echo $post->category->name. " ";
+	}
+	echo "<br/>";echo "<br/>";
+	echo "category post:"."<br>";
+	$categories = Category::all();
+	echo "<ul>";
+	foreach($categories as $category){
+		echo "<li>";		
+		echo $category->name.":";
+		echo "<ul>";
+		foreach($category->post as $post){
+			echo "<li>";		
+			echo $post->title;
+			echo "</li>";	
+		}	
+		echo "</ul>";
+	echo "</li>";	
+	}
+	echo "</ul>";
+	
 });
 
 Route::group(['middleware'=>'admin'], function(){

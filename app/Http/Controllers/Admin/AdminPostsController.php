@@ -8,6 +8,7 @@ use Auth;
 use App\User;
 use App\Post;
 use App\Photo;
+use App\Category;
 class AdminPostsController extends Controller
 {
     /**
@@ -28,7 +29,8 @@ class AdminPostsController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+		$cateegories = Category::pluck('name', 'id');
+        return view('admin.posts.create',compact('cateegories'));
     }
 
     /**

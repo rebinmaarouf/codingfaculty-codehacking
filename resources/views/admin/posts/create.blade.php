@@ -12,7 +12,7 @@
 		
 		<div class="form-group"> 
 			{!! Form::label('category_id', 'category'); !!}
-			{!! Form::select('category_id',array(''=>'options'),0,['class' => 'form-control','placeholder' => 'Pick a category...']) !!}
+			{!! Form::select('category_id',$cateegories,0,['class' => 'form-control','placeholder' => 'Pick a category...']) !!}		
 		</div>
 		
 		<div class="form-group"> 
