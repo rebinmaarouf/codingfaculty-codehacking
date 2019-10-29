@@ -77,7 +77,9 @@ class AdminPostsController extends Controller
      */
     public function edit($id)
     {
-        //
+		$cateegories = Category::pluck('name', 'id');
+		$post = Post::findOrFail($id);
+        return view('admin/posts/edit',compact('post','cateegories'));
     }
 
     /**
@@ -89,7 +91,23 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $post = Post::findOrFail($id);
+		$input = $request->all();
+		if ($file = $request->file('photo_id')) {
+			$name = $file->getClientOriginalName();
+			$name = "post-".$file->getClientoriginalName();
+			$address = 'images/users/';
+			$filee = $address . $name ;
+			$file->move($address,$name);
+			$photo =Photo::create(['filee'=>$filee]);
+			$input['photo_id'] = $photo->id;
+		}
+		if(isset($input['password']) && $input['password'] != NULL && $input['password'] != ""){
+		$input['password']= bcrypt($request->password);
+		}
+		Auth::user()->post()->whereId($id)->first()->update($input);
+		// $post->update($input);
+        return redirect('/admin/posts');
     }
 
     /**
@@ -100,6 +118,7 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+       Post::findOrFail($id)->delete();
+	   return redirect('/admin/posts');
     }
 }

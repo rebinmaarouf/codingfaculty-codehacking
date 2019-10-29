@@ -1,26 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>website</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="assets/css/style.css">
-	<link rel="icon" href="assets/iamges/logo.png" type="img/png">
-</head>
-<body>
+@extends('layouts.admin')
+
+@section('content')
 
 
+    <h1>Edit post</h1>
 
-
-
-
-
-
-
-
-
-
-<script src="assets/js/script.js"></script>
-</body>
-</html>
+	
+	
+		{!! Form::model($post,[ 'method' => 'PATCH','action' =>['admin\AdminPostsController@update', $post->id],'files' => true]) !!}
+	
+		<div class="form-group"> 
+			{!! Form::label('title', 'post title'); !!}
+			{!! Form::text('title',null, ['class' => 'form-control']) !!}
+		</div>
+		
+		<div class="form-group"> 
+			{!! Form::label('category_id', 'category'); !!}
+			{!! Form::select('category_id',$cateegories,null,['class' => 'form-control','placeholder' => 'Pick a category...']) !!}		
+		</div>
+		<div>
+		<img src="{{$post->photo->filee}}" alt="">
+		</div>
+		<div class="form-group"> 
+			{!! Form::label('photo_id', 'photo'); !!}
+			{!! Form::file('photo_id',null, ['class' => 'form-control']) !!}
+		</div>
+		
+		<div class="form-group"> 
+			{!! Form::label('body', 'content'); !!}
+			{!! Form::textarea('body',null, ['class' => 'form-control']) !!}
+		</div>
+		
+		<div class="form-group"> 	
+			{!! Form::submit('edit post',['class' => 'btn btn-primary']) !!}
+			
+		</div>
+	{!! Form::close() !!}
+	{!! Form::model($post,['method'=>'DELETE','action' => ['admin\AdminPostsController@destroy', $post->id]]) !!}
+	{!! Form::submit('delete post',['class' => 'btn btn-danger']) !!}
+	{!! Form::close() !!}
+	@include('includes/form_error')
+@stop

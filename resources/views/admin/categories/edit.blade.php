@@ -1,26 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>website</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="assets/css/style.css">
-	<link rel="icon" href="assets/iamges/logo.png" type="img/png">
-</head>
-<body>
+@extends('layouts.admin')
+@section('content')
+@if(Session::has('deleted_user'))
+	<p class="bg-danger">
+	{{session('deleted_user')}}
+	</p>
+@endif
+    <h1>categories</h1>
+	
+	<table class="table">
+		<thead>
+			<tr>
+				<th> id </th>
+				<th>Name</th>
+				<td>edit</td>
+				<td>delete</td>
+				</tr>
+		</thead>
+		<tbody>
+		@if($category)
+		{!! Form::model($category,[ 'method' => 'PATCH','action' =>['admin\AdminCategoryController@update', $category->id],'files' => true]) !!}
+		
+				<tr>
+				<td>
+				{{$category->id}}
+				</td>
+				<td>
+				{!! Form::text('name',null, ['class' => 'form-control']) !!}			
+				</td>
+				<td>
+				{!! Form::submit('edit category',['class' => 'btn btn-primary']) !!}
+				{!! Form::close() !!}
+				</td>
+				<td>
+				{!! Form::model($category,['method'=>'DELETE','action' => ['admin\AdminCategoryController@destroy', $category->id]]) !!}
+				{!! Form::submit('delete category',['class' => 'btn btn-danger']) !!}
+				{!! Form::close() !!}
+				</td>
+				</tr>
+		@endif	
+			
+		</tbody>
+		
+	</table>		
 
-
-
-
-
-
-
-
-
-
-
-
-<script src="assets/js/script.js"></script>
-</body>
-</html>
+	
+	@include('includes/form_error')
+	
+	
+@stop
