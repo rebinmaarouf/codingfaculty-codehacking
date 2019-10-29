@@ -20,7 +20,7 @@
 			@foreach($categories as $Category)
 				<tr>
 				<td>
-				<a href="/admin/categories/{{$Category->id}}/edit">
+				<a href="{{route('categories.edit',$Category->id)}}">
 				{{$Category->id}}
 				</a>
 				</td>
