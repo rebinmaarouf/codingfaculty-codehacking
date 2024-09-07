@@ -1,4 +1,5 @@
 <?php
+
 use App\User;
 use App\Role;
 use App\Photo;
@@ -15,67 +16,67 @@ use App\Category;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-Route::get('/test', function(){
-	echo "users:";echo "<br/>";
+Route::get('/test', function () {
+	echo "users:";
+	echo "<br/>";
 	$users  = User::all();
-	foreach($users as $user){
-		echo $user->name."<br/>";
+	foreach ($users as $user) {
+		echo $user->name . "<br/>";
 	}
-	
+
 	echo "<br/>";
-	echo "user role:";echo "<br/>";
+	echo "user role:";
+	echo "<br/>";
 	$userrole = User::all();
-	foreach($userrole as $user){
-		echo $user->name.": ";
-		echo $user->Role->name. " ";
-		if($user->photo){
-		echo "photo:". $user->photo->filee. "<br/>";
+	foreach ($userrole as $user) {
+		echo $user->name . ": ";
+		echo $user->Role->name . " ";
+		if ($user->photo) {
+			echo "photo:" . $user->photo->filee . "<br/>";
 		}
 	}
-	
+
 	echo "<br/>";
-	echo "role:";echo "<br/>";
+	echo "role:";
+	echo "<br/>";
 	$roles = Role::all();
-	foreach($roles as $role){
-		echo $role->name ."<br/>";
+	foreach ($roles as $role) {
+		echo $role->name . "<br/>";
 	}
-	
-		
+
+
 	echo "<br/>";
-	echo "role user:";echo "<br/>";
+	echo "role user:";
+	echo "<br/>";
 	$roleuser = Role::all();
-	foreach($roles as $role){
-		echo $role->name .": <br/>";
+	foreach ($roles as $role) {
+		echo $role->name . ": <br/>";
 		echo "<ul>";
-		foreach($role->user as $user){
+		foreach ($role->user as $user) {
 			echo "<li>";
-		echo $user->name ."</li>";
-		
+			echo $user->name . "</li>";
 		}
-	echo "</ul>";
-	echo "<br/>";
-	
+		echo "</ul>";
+		echo "<br/>";
 	}
-	
+
 	echo "<br/><br/>";
 	echo "user posts:";
 	echo "<br/>";
 	$users = User::all();
 	echo "<ul>";
-	foreach($users as $user){
+	foreach ($users as $user) {
 		echo "<li>";
 		echo $user->name;
 		echo "<ul>";
-		foreach($user->post as $post){
+		foreach ($user->post as $post) {
 			echo "<li>";
 			echo $post->title;
 			echo "</li>";
@@ -84,54 +85,52 @@ Route::get('/test', function(){
 		echo "</li>";
 	}
 	echo "</ul>";
-	
-	echo "Categories"."<br>";
+
+	echo "Categories" . "<br>";
 	$Categories = Category::all();
 	echo "<ul>";
-	foreach($Categories as $Category){
+	foreach ($Categories as $Category) {
 		echo "<li>";
 		echo $Category->name;
 		echo "</li>";
 	}
 	echo "</ul>";
-	
-	echo "post category:"."<br>";
+
+	echo "post category:" . "<br>";
 	$posts = Post::all();
-	foreach($posts as $post){
-		echo $post->title.": ";
-		echo $post->category->name. " ";
+	foreach ($posts as $post) {
+		echo $post->title . ": ";
+		echo $post->category->name . " ";
 	}
-	echo "<br/>";echo "<br/>";
-	echo "category post:"."<br>";
+	echo "<br/>";
+	echo "<br/>";
+	echo "category post:" . "<br>";
 	$categories = Category::all();
 	echo "<ul>";
-	foreach($categories as $category){
-		echo "<li>";		
-		echo $category->name.":";
+	foreach ($categories as $category) {
+		echo "<li>";
+		echo $category->name . ":";
 		echo "<ul>";
-		foreach($category->post as $post){
-			echo "<li>";		
+		foreach ($category->post as $post) {
+			echo "<li>";
 			echo $post->title;
-			echo "</li>";	
-		}	
+			echo "</li>";
+		}
 		echo "</ul>";
-	echo "</li>";	
+		echo "</li>";
 	}
 	echo "</ul>";
-	
 });
 
-Route::group(['middleware'=>'admin'], function(){
-	
-	Route::get('/admin',function(){
+Route::group(['middleware' => 'admin'], function () {
+
+	Route::get('/admin', function () {
 		return view('admin.index');
 	});
-	
-	Route::resource('/admin/users','admin\AdminUsersController');
-	
-	Route::resource('/admin/posts','admin\AdminPostsController');
-	
-	Route::resource('/admin/categories','admin\AdminCategoryController');
+
+	Route::resource('/admin/users', 'admin\AdminUsersController');
+
+	Route::resource('/admin/posts', 'admin\AdminPostsController');
+
+	Route::resource('/admin/categories', 'admin\AdminCategoryController');
 });
-
-
